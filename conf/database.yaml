@@ -1,0 +1,18 @@
+multiDb: true
+migrationsDisabled: false
+
+master:
+  driver: postgres
+  database: pethub
+  host: localhost
+  user: app_user
+  password: g0pe1hu3
+  port: 5432
+
+slave:
+  driver: postgres
+  database: pethub
+  host: localhost
+  user: app_user
+  password: g0pe1hu3
+  port: 5432

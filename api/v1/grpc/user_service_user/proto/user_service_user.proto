@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package user_service_user;
+option go_package = "./user_service_user";
+
+// Service interface.
+service User {
+  rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
+}
+
+// request: GetUserRequest
+message GetUserRequest {
+  int32 Id = 1;
+}
+
+// response: GetUserResponse
+message GetUserResponse {
+  int32 Id = 1;
+  string FirstName = 2;
+  string LastName = 3;
+
+}
