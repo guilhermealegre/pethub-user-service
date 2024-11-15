@@ -1,7 +1,10 @@
 package v1
 
 import (
+	"github.com/gocraft/dbr/v2"
+	"github.com/google/uuid"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain"
+	dCtx "github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain/context"
 	"github.com/guilhermealegre/pethub-user-service/internal/infrastructure/database"
 	"github.com/guilhermealegre/pethub-user-service/internal/user/domain/v1"
 )
@@ -17,19 +20,13 @@ func NewRepository(app domain.IApp) v1.IRepository {
 }
 
 // CreateUser create new user
-func (r *Repository) CreateUser(ctx domain.IContext, tx *dbr.Tx, userProfile *v1.User) (idUser int, err error) {
-	_, err = tx.InsertInto(database.UserTableUser).
+func (r *Repository) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser int, err error) {
+	_, err = r.app.Database().Write().InsertInto(database.UserTableUser).
 		Columns(
-			"first_name",
-			"last_name",
-			"avatar",
-			"onboard",
+			"uuid",
 		).
 		Values(
-			userProfile.FirstName,
-			userProfile.LastName,
-			userProfile.Avatar,
-			true,
+			uuidUser,
 		).
 		Returning("id_user").
 		Record(&idUser).
@@ -43,8 +40,8 @@ func (r *Repository) CreateUser(ctx domain.IContext, tx *dbr.Tx, userProfile *v1
 }
 
 // GetUserProfile get user profile
-func (r *Repository) GetUserProfile(ctx domain.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
-	columns := []string{
+func (r *Repository) GetUserProfile(ctx dCtx.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
+	columns := []any{
 		"COALESCE(first_name, '') as first_name",
 		"COALESCE(first_name, '') as first_name",
 		"COALESCE(last_name, '') as last_name",
@@ -65,7 +62,7 @@ func (r *Repository) GetUserProfile(ctx domain.IContext, idUser int) (userProfil
 }
 
 // UpdateUserProfile update user profile
-func (r *Repository) UpdateUserProfile(ctx domain.IContext, tx dbr.SessionRunner, idUser int, profile *v1.UserProfile) error {
+func (r *Repository) UpdateUserProfile(ctx dCtx.IContext, tx dbr.SessionRunner, idUser int, profile *v1.UserProfile) error {
 	if tx == nil {
 		tx = r.app.Database().Write()
 	}

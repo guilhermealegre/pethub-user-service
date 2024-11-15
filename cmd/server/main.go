@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/grpc"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/logger"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/tracer"
 	v1UserController "github.com/guilhermealegre/pethub-user-service/internal/user/controller/v1"
@@ -38,8 +39,9 @@ func main() {
 	newValidator := validator.New(newApp).
 		AddFieldValidators().
 		AddStructValidators()
-	newRedis := redis.New(newApp, nil).WithAdditionalConfigType(&v1.AdditionalConfigType{})
+	newRedis := redis.New(newApp, nil)
 	newDatabase := database.New(newApp, nil)
+	newGrpc := grpc.New(newApp, nil)
 
 	// streaming
 	userStreaming := v1UserStreaming.NewStreaming(newApp)
@@ -60,8 +62,12 @@ func main() {
 		WithController(v1SwaggerController.NewController(newApp)).
 		WithController(v1AliveController.NewController(newApp, aliveModel)).
 		//user
-		WithController(v1UserController.NewController(newApp, userModel)).
-		newApp.
+		WithController(v1UserController.NewController(newApp, userModel))
+
+	newGrpc.
+		WithController(v1UserController.NewGrpcController(newApp, userModel))
+
+	newApp.
 		WithValidator(newValidator).
 		WithDatabase(newDatabase).
 		WithRedis(newRedis).

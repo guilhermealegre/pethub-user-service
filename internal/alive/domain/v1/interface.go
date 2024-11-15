@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain"
+	dCtx "github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain/context"
 )
 
 type IController interface {
@@ -10,6 +10,6 @@ type IController interface {
 }
 
 type IModel interface {
-	Get(ctx domain.IContext) (*Alive, error)
-	GetPublic(ctx domain.IContext) (*PublicAlive, error)
+	Get(ctx dCtx.IContext) (*Alive, error)
+	GetPublic(ctx dCtx.IContext) (*PublicAlive, error)
 }

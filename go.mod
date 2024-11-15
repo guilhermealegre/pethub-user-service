@@ -8,6 +8,7 @@ require (
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/gocraft/dbr/v2 v2.7.7
+	github.com/google/uuid v1.6.0
 	github.com/guilhermealegre/go-clean-arch-infrastructure-lib v0.0.0-20241114212345-3347ddee5b26
 	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.9.0
@@ -58,7 +59,6 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 // indirect
 	github.com/guilhermealegre/go-clean-arch-core-lib v0.0.0-20241027200540-0fd34797cc18 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
@@ -100,6 +100,7 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	go.mongodb.org/mongo-driver v1.14.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.56.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.56.0 // indirect
 	go.opentelemetry.io/otel v1.31.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.31.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.31.0 // indirect

@@ -6,6 +6,7 @@ option go_package = "./user_service_user";
 // Service interface.
 service User {
   rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
 }
 
 // request: GetUserRequest
@@ -19,4 +20,14 @@ message GetUserResponse {
   string FirstName = 2;
   string LastName = 3;
 
+}
+
+// request: CreateUserRequest
+message CreateUserRequest {
+  bytes UUID = 1;
+}
+
+// response: CreateUserResponse
+message CreateUserResponse {
+  int32 Id = 1;
 }

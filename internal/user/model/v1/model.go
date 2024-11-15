@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"github.com/google/uuid"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain"
+	dCtx "github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain/context"
 	"github.com/guilhermealegre/pethub-user-service/internal/user/domain/v1"
 )
 
@@ -20,7 +22,7 @@ func NewModel(app domain.IApp, repository v1.IRepository, streaming v1.IStreamin
 }
 
 // Onboard user
-func (m *Model) Onboard(ctx domain.IContext, idUser int, onboard *v1.Onboard) error {
+func (m *Model) Onboard(ctx dCtx.IContext, idUser int, onboard *v1.Onboard) error {
 	tx, err := m.app.Database().Write().Begin()
 	if err != nil {
 		return err
@@ -44,23 +46,22 @@ func (m *Model) Onboard(ctx domain.IContext, idUser int, onboard *v1.Onboard) er
 }
 
 // CreateUser create new user
-func (m *Model) CreateUser(ctx domain.IContext, tx *dbr.Tx, user *v1.User) (idUser int, err error) {
-	return m.repository.CreateUser(ctx, tx, user)
+func (m *Model) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser int, err error) {
+	return m.repository.CreateUser(ctx, uuidUser)
 }
 
 // GetUserProfile get user profile
-func (m *Model) GetUserProfile(ctx domain.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
+func (m *Model) GetUserProfile(ctx dCtx.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
 	userProfile, err = m.repository.GetUserProfile(ctx, idUser)
 	if err != nil {
 		return nil, err
 	}
 
-	userProfile.Email = ctx.GetUser().Email
 	return userProfile, nil
 }
 
 // UpdateUserProfile update user profile
-func (m *Model) UpdateUserProfile(ctx domain.IContext, idUser int, profile *v1.UserProfile) error {
+func (m *Model) UpdateUserProfile(ctx dCtx.IContext, idUser int, profile *v1.UserProfile) error {
 
 	if err := m.repository.UpdateUserProfile(ctx, nil, idUser, profile); err != nil {
 		return m.app.Logger().DBLog(err)
@@ -70,7 +71,7 @@ func (m *Model) UpdateUserProfile(ctx domain.IContext, idUser int, profile *v1.U
 }
 
 // GetUserMe get user me
-func (m *Model) GetUserMe(ctx domain.IContext, idUser int) (*v1.UserMe, error) {
+func (m *Model) GetUserMe(ctx dCtx.IContext, idUser int) (*v1.UserMe, error) {
 	userProfile, err := m.repository.GetUserProfile(ctx, idUser)
 	if err != nil {
 		return nil, err

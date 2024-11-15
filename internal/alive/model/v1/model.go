@@ -1,6 +1,7 @@
 package v1
 
 import (
+	dCtx "github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain/context"
 	"os"
 	"strconv"
 
@@ -23,7 +24,7 @@ func NewModel(app domain.IApp) v1.IModel {
 	}
 }
 
-func (m *Model) Get(ctx domain.IContext) (_ *v1.Alive, err error) {
+func (m *Model) Get(ctx dCtx.IContext) (_ *v1.Alive, err error) {
 	obj := &v1.Alive{
 		ServerName: m.app.Config().Name,
 		Port:       strconv.Itoa(m.app.Http().Config().Port),
@@ -38,7 +39,7 @@ func (m *Model) Get(ctx domain.IContext) (_ *v1.Alive, err error) {
 	return obj, nil
 }
 
-func (m *Model) GetPublic(ctx domain.IContext) (*v1.PublicAlive, error) {
+func (m *Model) GetPublic(ctx dCtx.IContext) (*v1.PublicAlive, error) {
 	obj := &v1.PublicAlive{
 		Name:    m.app.Config().Name,
 		Message: Message,

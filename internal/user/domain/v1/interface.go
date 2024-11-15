@@ -3,7 +3,9 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gocraft/dbr/v2"
+	"github.com/google/uuid"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain"
+	dCtx "github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain/context"
 )
 
 type IController interface {
@@ -14,17 +16,17 @@ type IController interface {
 }
 
 type IModel interface {
-	CreateUser(ctx domain.IContext, tx *dbr.Tx, userProfile *User) (int, error)
-	GetUserProfile(ctx domain.IContext, idUser int) (*UserProfile, error)
-	UpdateUserProfile(ctx domain.IContext, idUser int, profile *UserProfile) error
-	Onboard(ctx domain.IContext, idUser int, onboard *Onboard) error
-	GetUserMe(ctx domain.IContext, idUser int) (*UserMe, error)
+	CreateUser(ctx dCtx.IContext, uuid2 uuid.UUID) (int, error)
+	GetUserProfile(ctx dCtx.IContext, idUser int) (*UserProfile, error)
+	UpdateUserProfile(ctx dCtx.IContext, idUser int, profile *UserProfile) error
+	Onboard(ctx dCtx.IContext, idUser int, onboard *Onboard) error
+	GetUserMe(ctx dCtx.IContext, idUser int) (*UserMe, error)
 }
 
 type IRepository interface {
-	CreateUser(ctx domain.IContext, tx *dbr.Tx, userProfile *User) (int, error)
-	GetUserProfile(ctx domain.IContext, idUser int) (*UserProfile, error)
-	UpdateUserProfile(ctx domain.IContext, tx dbr.SessionRunner, idUser int, profile *UserProfile) error
+	CreateUser(ctx dCtx.IContext, uuid uuid.UUID) (int, error)
+	GetUserProfile(ctx dCtx.IContext, idUser int) (*UserProfile, error)
+	UpdateUserProfile(ctx dCtx.IContext, tx dbr.SessionRunner, idUser int, profile *UserProfile) error
 }
 
 type IStreaming interface{}
