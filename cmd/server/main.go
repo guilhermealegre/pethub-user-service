@@ -53,6 +53,9 @@ func main() {
 	// user
 	userModel := v1UserModel.NewModel(newApp, userRepository, userStreaming)
 
+	newGrpc.
+		WithController(v1UserController.NewGrpcController(newApp, userModel))
+
 	newHttp.
 		//middlewares
 		WithMiddleware(v1Middleware.NewAuthenticateMiddleware(newApp)).
@@ -64,15 +67,13 @@ func main() {
 		//user
 		WithController(v1UserController.NewController(newApp, userModel))
 
-	newGrpc.
-		WithController(v1UserController.NewGrpcController(newApp, userModel))
-
 	newApp.
 		WithValidator(newValidator).
 		WithDatabase(newDatabase).
 		WithRedis(newRedis).
 		WithLogger(newLogger).
 		WithTracer(newTracer).
+		WithGrpc(newGrpc).
 		WithHttp(newHttp)
 
 	// start app

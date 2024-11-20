@@ -8,6 +8,7 @@ require (
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/gocraft/dbr/v2 v2.7.7
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/guilhermealegre/go-clean-arch-infrastructure-lib v0.0.0-20241114212345-3347ddee5b26
 	github.com/lib/pq v1.10.9

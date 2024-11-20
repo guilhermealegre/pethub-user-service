@@ -28,7 +28,7 @@ func (r *Repository) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser i
 		Values(
 			uuidUser,
 		).
-		Returning("id_user").
+		Returning("id_users").
 		Record(&idUser).
 		ExecContext(ctx)
 
@@ -36,7 +36,7 @@ func (r *Repository) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser i
 		return 0, r.app.Logger().DBLog(err)
 	}
 
-	return 0, nil
+	return idUser, nil
 }
 
 // GetUserProfile get user profile

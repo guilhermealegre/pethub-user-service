@@ -18,6 +18,7 @@ type GrpcController struct {
 func NewGrpcController(app domain.IApp, model v1.IModel) domain.IController {
 	return &GrpcController{
 		DefaultController: domain.NewDefaultController(app),
+		model:             model,
 	}
 }
 

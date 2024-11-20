@@ -283,6 +283,9 @@ github.com/goccy/go-json/internal/runtime
 ## explicit; go 1.21
 github.com/gocraft/dbr/v2
 github.com/gocraft/dbr/v2/dialect
+# github.com/golang-jwt/jwt v3.2.2+incompatible
+## explicit
+github.com/golang-jwt/jwt
 # github.com/google/uuid v1.6.0
 ## explicit
 github.com/google/uuid
