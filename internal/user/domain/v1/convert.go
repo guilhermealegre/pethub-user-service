@@ -25,7 +25,6 @@ func (s *UserProfile) FromDomainToAPI() (userProfile *response.UserProfileRespon
 	userProfile = &response.UserProfileResponse{
 		FirstName: s.FirstName,
 		LastName:  s.LastName,
-		Tag:       s.Tag,
 		Avatar:    s.Avatar,
 		Email:     s.Email,
 	}
@@ -46,14 +45,17 @@ func (s *UserProfile) FromAPIToDomain(req *request.UpdateUserProfileRequest) (us
 	return userProfile
 }
 
-func (u *UserMe) FromDomainToAPI() (userMe *UserMe) {
+func (u *UserMe) FromDomainToAPI() (userMe *response.UserMeResponse) {
 	if u == nil {
 		return
 	}
 
-	return &UserMe{
-		IdUser:      u.IdUser,
-		OnboardSet:  u.OnboardSet,
-		PasswordSet: u.PasswordSet,
+	return &response.UserMeResponse{
+		UserId:     u.UserId,
+		UserUUID:   u.UserUUID,
+		FirstName:  u.FirstName,
+		LastName:   u.LastName,
+		Email:      u.Email,
+		OnboardSet: u.OnboardSet,
 	}
 }

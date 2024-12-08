@@ -1,7 +1,7 @@
 FROM 176300518568.dkr.ecr.eu-west-1.amazonaws.com/baseimages:golang1.20.4-alpine3.17 as builder
 
-COPY . /go/src/be-user-service
-WORKDIR /go/src/be-user-service
+COPY . /go/src/pethub-user-service
+WORKDIR /go/src/pethub-user-service
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o be_user cmd/server/main.go
 
@@ -10,7 +10,7 @@ RUN chown 755 be_user
 
 FROM 176300518568.dkr.ecr.eu-west-1.amazonaws.com/baseimages:alpine3.14
 
-COPY --from=builder --chown=root:root /go/src/be-user-service/be_user .
+COPY --from=builder --chown=root:root /go/src/pethub-user-service/be_user .
 
 RUN apk --no-cache add ca-certificates \
     curl \
@@ -25,8 +25,8 @@ COPY internal/swagger/docs internal/swagger/docs
 COPY build/bash-multi.entrypoint.sh /entrypoint.sh
 
 
-RUN chmod +x /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
 
 
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./be_user"]

@@ -51,35 +51,29 @@ func (m *Model) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser int, e
 }
 
 // GetUserProfile get user profile
-func (m *Model) GetUserProfile(ctx dCtx.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
-	userProfile, err = m.repository.GetUserProfile(ctx, idUser)
-	if err != nil {
-		return nil, err
-	}
-
-	return userProfile, nil
+func (m *Model) GetUserProfile(ctx dCtx.IContext, userUUID uuid.UUID) (userProfile *v1.UserProfile, err error) {
+	return m.repository.GetUserProfile(ctx, userUUID)
 }
 
 // UpdateUserProfile update user profile
 func (m *Model) UpdateUserProfile(ctx dCtx.IContext, idUser int, profile *v1.UserProfile) error {
 
-	if err := m.repository.UpdateUserProfile(ctx, nil, idUser, profile); err != nil {
-		return m.app.Logger().DBLog(err)
-	}
-
-	return nil
+	return m.repository.UpdateUserProfile(ctx, nil, idUser, profile)
 }
 
 // GetUserMe get user me
-func (m *Model) GetUserMe(ctx dCtx.IContext, idUser int) (*v1.UserMe, error) {
-	userProfile, err := m.repository.GetUserProfile(ctx, idUser)
+func (m *Model) GetUserMe(ctx dCtx.IContext, userUUID uuid.UUID) (*v1.UserMe, error) {
+	userProfile, err := m.repository.GetUserProfile(ctx, userUUID)
 	if err != nil {
 		return nil, err
 	}
 
 	return &v1.UserMe{
-		IdUser:      userProfile.IdUser,
-		OnboardSet:  userProfile.OnboardSet,
-		PasswordSet: userProfile.PasswordSet,
+		UserUUID:   userProfile.UserUUID,
+		UserId:     userProfile.UserID,
+		Email:      userProfile.Email,
+		FirstName:  userProfile.FirstName,
+		LastName:   userProfile.LastName,
+		OnboardSet: userProfile.OnboardSet,
 	}, nil
 }

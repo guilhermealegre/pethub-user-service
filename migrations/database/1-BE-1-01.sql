@@ -4,7 +4,7 @@
 
 CREATE TABLE "user".users
 (
-    id_users         SERIAL PRIMARY KEY,
+    user_id         SERIAL PRIMARY KEY,
     uuid            UUID NOT NULL UNIQUE,
     first_name      VARCHAR(150),
     last_name       VARCHAR(150),

@@ -1,3 +1,4 @@
 host: localhost
 port: 9002
-
+jwtSecret: secret_key_fithub
+jwtExpiryTimeHours: 24

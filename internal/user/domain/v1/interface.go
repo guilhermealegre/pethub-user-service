@@ -17,15 +17,15 @@ type IController interface {
 
 type IModel interface {
 	CreateUser(ctx dCtx.IContext, uuid2 uuid.UUID) (int, error)
-	GetUserProfile(ctx dCtx.IContext, idUser int) (*UserProfile, error)
+	GetUserProfile(ctx dCtx.IContext, idUser uuid.UUID) (*UserProfile, error)
 	UpdateUserProfile(ctx dCtx.IContext, idUser int, profile *UserProfile) error
 	Onboard(ctx dCtx.IContext, idUser int, onboard *Onboard) error
-	GetUserMe(ctx dCtx.IContext, idUser int) (*UserMe, error)
+	GetUserMe(ctx dCtx.IContext, userUUID uuid.UUID) (*UserMe, error)
 }
 
 type IRepository interface {
 	CreateUser(ctx dCtx.IContext, uuid uuid.UUID) (int, error)
-	GetUserProfile(ctx dCtx.IContext, idUser int) (*UserProfile, error)
+	GetUserProfile(ctx dCtx.IContext, uuid uuid.UUID) (*UserProfile, error)
 	UpdateUserProfile(ctx dCtx.IContext, tx dbr.SessionRunner, idUser int, profile *UserProfile) error
 }
 

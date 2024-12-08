@@ -66,7 +66,7 @@ func ValidateToken(jwtSecret string) func(ctx *gin.Context) {
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if ok && token.Valid {
-			c.Set("userID", claims["userID"])
+			c.Set("userUUID", claims["user_uuid"])
 			c.Set("email", claims["email"])
 		} else {
 			c.JSON(status.StatusUnauthorized, gin.H{"error": "Invalid token claims"})

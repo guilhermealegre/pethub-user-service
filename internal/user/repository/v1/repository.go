@@ -40,18 +40,18 @@ func (r *Repository) CreateUser(ctx dCtx.IContext, uuidUser uuid.UUID) (idUser i
 }
 
 // GetUserProfile get user profile
-func (r *Repository) GetUserProfile(ctx dCtx.IContext, idUser int) (userProfile *v1.UserProfile, err error) {
+func (r *Repository) GetUserProfile(ctx dCtx.IContext, userUUID uuid.UUID) (userProfile *v1.UserProfile, err error) {
 	columns := []any{
-		"COALESCE(first_name, '') as first_name",
+		"user_id",
+		"uuid as user_uuid",
 		"COALESCE(first_name, '') as first_name",
 		"COALESCE(last_name, '') as last_name",
 		"onboard_set",
-		"password_set",
 	}
 
 	_, err = r.app.Database().Read().Select(columns...).
 		From(database.UserTableUser).
-		Where("id_users  = ?", idUser).
+		Where("uuid = ?", userUUID).
 		LoadContext(ctx, &userProfile)
 
 	if err != nil {

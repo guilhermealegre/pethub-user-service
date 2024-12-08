@@ -1,6 +1,9 @@
 package response
 
-import "bitbucket.org/asadventure/be-core-lib/response"
+import (
+	"bitbucket.org/asadventure/be-core-lib/response"
+	"github.com/google/uuid"
+)
 
 // swagger:model swaggerUserProfileResponse
 type swaggerUserProfileResponse struct { //nolint:all
@@ -26,6 +29,10 @@ type swaggerUserMeResponse struct { //nolint:all
 
 //swagger:model UserProfileResponse
 type UserMeResponse struct {
-	IdUser  int  `json:"id_user"`
-	Onboard bool `json:"onboard"`
+	UserId     int       `json:"user_id"`
+	UserUUID   uuid.UUID `json:"user_uuid"`
+	FirstName  string    `json:"first_name"`
+	LastName   string    `json:"last_name"`
+	Email      string    `json:"email"`
+	OnboardSet bool      `json:"onboard_set"`
 }

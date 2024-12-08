@@ -2,6 +2,8 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/context"
 	"github.com/guilhermealegre/go-clean-arch-infrastructure-lib/domain"
 	v1Routes "github.com/guilhermealegre/pethub-user-service/api/v1/http"
 	v1 "github.com/guilhermealegre/pethub-user-service/internal/user/domain/v1"
@@ -96,10 +98,17 @@ func (c *Controller) UpdateUserProfile(gCtx *gin.Context) {
 
 }
 
-func (c *Controller) GetUserMe(ctx *gin.Context) {
-	/*
-		//TODO implement me
-		panic("implement me")
+func (c *Controller) GetUserMe(gCtx *gin.Context) {
+	ctx := context.NewContext(gCtx)
+	strUserUUID, _ := ctx.Get("userUUID")
+	userUUID, err := uuid.Parse(strUserUUID.(string))
+	if err != nil {
+		c.Json(ctx, nil, err)
+		return
+	}
 
-	*/
+	data, err := c.model.GetUserMe(ctx, userUUID)
+
+	c.Json(ctx, data.FromDomainToAPI(), err)
+
 }

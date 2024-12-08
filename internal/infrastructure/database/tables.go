@@ -5,7 +5,7 @@ import (
 )
 
 func format(schema, table string) string {
-	return fmt.Sprintf("%s.%s", schema, table)
+	return fmt.Sprintf("\"%s\".%s", schema, table)
 }
 
 var (

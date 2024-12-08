@@ -1,5 +1,7 @@
 package v1
 
+import "github.com/google/uuid"
+
 type User struct {
 	IdUser    int    `json:"id_user"`
 	FirstName string `json:"first_name"`
@@ -9,14 +11,19 @@ type User struct {
 }
 
 type UserProfile struct {
-	IdUser      int    `json:"id_user"`
-	FirstName   string `json:"first_name"`
-	LastName    string `json:"last_name"`
-	Email       string `json:"email"`
-	Tag         string `json:"tag"`
-	Avatar      string `json:"avatar"`
-	OnboardSet  bool   `json:"onboard_set"`
-	PasswordSet bool   `json:"password_set"`
+	UserID     int       `json:"user_id"`
+	UserUUID   uuid.UUID `json:"user_uuid"`
+	FirstName  string    `json:"first_name"`
+	LastName   string    `json:"last_name"`
+	Email      string    `json:"email"`
+	Avatar     string    `json:"avatar"`
+	OnboardSet bool      `json:"onboard_set"`
+	Animals    []Animal  `json:"animals"`
+}
+
+type Animal struct {
+	AnimalID int    `json:"animal_id"`
+	Name     string `json:"name"`
 }
 
 type Onboard struct {
@@ -35,7 +42,10 @@ type UpdateAuth struct {
 }
 
 type UserMe struct {
-	IdUser      int  `json:"id_user"`
-	OnboardSet  bool `json:"onboard_set"`
-	PasswordSet bool `json:"password_set"`
+	UserId     int       `json:"user_id"`
+	UserUUID   uuid.UUID `json:"user_uuid"`
+	Email      string    `json:"email"`
+	FirstName  string    `json:"first_name"`
+	LastName   string    `json:"last_name"`
+	OnboardSet bool      `json:"onboard_set"`
 }
